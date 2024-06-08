@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: fichas-tecnicas
+  name: ft-front
+  labels:
+    app: ft-front
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+spec:
+  selector:
+    app: ft-front
+  ports:
+    - name: port1
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePorts
