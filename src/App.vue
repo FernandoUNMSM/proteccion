@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div class="container-fluid" v-if="logged">
-      <router-view></router-view>
+      <div v-show="user">
+        <router-view></router-view>
+      </div>
       <div v-show="!user">
         <section class="wrapper">
           <div class="loader">
@@ -35,14 +37,23 @@ export default {
     })
   },
   methods: {
-    ...mapMutations("login", ["updateUser"])
+    ...mapMutations("login", ["updateUser", "updateLogged"])
   },
-  created() {
+  mounted() {
     const account = this.$msal.getUser();
-    if (account) {
-      this.updateUser(account);
-      sessionStorage.setItem("user", JSON.stringify(account));
-    }
+    setTimeout(() => {
+      console.log({ account });
+      if (this.logged) {
+        if (account) {
+          this.updateUser(account);
+          sessionStorage.setItem("user", JSON.stringify(account));
+        } else {
+          sessionStorage.removeItem("logged");
+          this.updateLogged("false");
+          window.location.reload();
+        }
+      }
+    }, 1000);
   }
 };
 </script>
