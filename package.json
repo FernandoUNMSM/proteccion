@@ -85,6 +85,9 @@
       }
     ]
   },
+  "engines": {
+    "node": "16.x"
+  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
